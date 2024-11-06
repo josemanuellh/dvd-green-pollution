@@ -102,7 +102,7 @@ function display(rect, canvas, context) {
   context.clearRect(0, 0, canvas.width, canvas.height)
 
   if(origDirection !== direction) {
-    var arrColors = ['./default.svg','./default1.svg','./default2.svg','./default3.svg','./default4.svg','./default5.svg'];
+    var arrColors = ['./default.svg','./default1.svg','./default2.svg','./default3.svg','./default4.svg','./default5.svg','./default6.svg','./default7.svg'];
     image.src = arrColors[Math.floor(Math.random() * arrColors.length)];
     image.height = 341;
     image.width = 244;
