@@ -1,9 +1,9 @@
 // Request frames function
 window.requestAnimFrame = (function (callback) {
   return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
-function (callback) {
-  window.setTimeout(callback, 1000 / 60)
-}
+    function (callback) {
+      window.setTimeout(callback, 1000 / 60)
+    }
 })()
 
 // Create image and set to default if invalid input provided
@@ -28,15 +28,16 @@ document.body.appendChild(image)
 document.getElementById('favicon').setAttribute('href', image.src)
 
 // Draw image on canvas
-function showImage (rect, context) {
+function showImage(rect, context) {
   context.drawImage(image, rect.x, rect.y)
 }
 
 // Movement
 var direction = 'se'
 
-function display (rect, canvas, context) {
+function display(rect, canvas, context) {
   var speed = 5
+  var origDirection = direction;
 
   // If image hits top
   if (rect.y <= 0) {
@@ -46,7 +47,7 @@ function display (rect, canvas, context) {
       direction = 'sw'
     }
 
-  // If image hits bottom
+    // If image hits bottom
   } else if (rect.y >= canvas.height - rect.height) {
     if (direction === 'se') {
       direction = 'ne'
@@ -54,7 +55,7 @@ function display (rect, canvas, context) {
       direction = 'nw'
     }
 
-  // If image hits left
+    // If image hits left
   } else if (rect.x <= 0) {
     if (direction === 'nw') {
       direction = 'ne'
@@ -62,7 +63,7 @@ function display (rect, canvas, context) {
       direction = 'se'
     }
 
-  // If image hits right
+    // If image hits right
   } else if (rect.x >= canvas.width - rect.width) {
     if (direction === 'ne') {
       direction = 'nw'
@@ -72,33 +73,42 @@ function display (rect, canvas, context) {
   }
 
   // Now to define what the directions actually mean
-  switch(direction) {
+  switch (direction) {
     case 'ne':
       rect.x += speed
       rect.y -= speed
-    break
+      break
 
     case 'nw':
       rect.x -= speed
       rect.y -= speed
-    break
+      break
 
     case 'se':
       rect.x += speed
       rect.y += speed
-    break
+      break
 
     case 'sw':
       rect.x -= speed
       rect.y += speed
-    break
+      break
 
     default:
-      // This shouldn't ever happen
+    // This shouldn't ever happen
   }
 
   // Clear canvas
   context.clearRect(0, 0, canvas.width, canvas.height)
+
+  if(origDirection !== direction) {
+    var arrColors = ['./default.svg','./default1.svg','./default2.svg','./default3.svg','./default4.svg','./default5.svg'];
+    image.src = arrColors[Math.floor(Math.random() * arrColors.length)];
+    image.height = 341;
+    image.width = 244;
+  }
+
+  context.fillRect(0, 0, canvas.width, canvas.height);
 
   showImage(rect, context)
 
@@ -113,7 +123,7 @@ var canvas = document.getElementById('canvas')
 var context = canvas.getContext('2d')
 
 // Change canvas dimensions when browser window is resized
-function resize (canvas) {
+function resize(canvas) {
   canvas.height = window.innerHeight
   canvas.width = window.innerWidth
 }
